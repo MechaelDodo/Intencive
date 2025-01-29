@@ -10,7 +10,7 @@ public class Task3 {
         //у меня почему-то кодировка летит, хотя в логах пишет UTF-8, поэтому использую PrintWriter
         PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8)));
         Study study = new Study("Изучение Java - это просто!");
-        writer.println(study.printCourse());
+        writer.println(study.print_course());
         writer.flush();
         //System.out.println(study.printCourse());
     }
@@ -25,7 +25,7 @@ class Study {
         this.course = course;
     }
 
-    public String printCourse() {
+    public String print_course() {
         return this.course;
     }
 }

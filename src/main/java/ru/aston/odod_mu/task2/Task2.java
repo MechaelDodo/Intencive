@@ -9,7 +9,7 @@ public class Task2 {
 
         for(User user: users){
             user.somethingForAdmin();
-            user.privateContent();
+            user.private_content();
         }
     }
 }
@@ -52,7 +52,7 @@ class User{
         }
     }
 
-    public void privateContent(){
+    public void private_content(){
         if (this.age >= 18){
             System.out.println("Vodka\n");
         }else{

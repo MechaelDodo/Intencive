@@ -5,7 +5,7 @@ public class Task4 {
         Car car1 = new Car("green","peugeot", 2000);
         Car car2 = new Car("black","bmw", 2500);
         for(Car car: new Car[]{car1, car2}){
-            car.printInfo();
+            car.print_info();
         }
     }
 }
@@ -32,7 +32,7 @@ class Car{
         this.weight = weight;
     }
 
-    public void printInfo(){
+    public void print_info(){
         System.out.println("color: " + this.color +  " weight: " + this.weight + " name: " +  this.name);
     }
 
