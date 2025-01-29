@@ -3,6 +3,7 @@ package main.java.ru.aston.odod_mu.task5;
 import java.time.LocalDate;
 import java.time.Period;
 
+
 public class Task5 {
     public static void main(String[] args){
         House house1 = new House();
