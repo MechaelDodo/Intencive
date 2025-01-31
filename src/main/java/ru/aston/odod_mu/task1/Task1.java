@@ -1,7 +1,4 @@
-package ru.aston.odod_mu.task1;
-//package main.java.ru.aston.odod_mu.task1;
-import java.util.ArrayList;
-import java.util.List;
+package main.java.ru.aston.odod_mu.task1;
 
 /*
 P.S. немного измененное ТЗ
@@ -62,7 +59,3 @@ public class Task1 {
 
     }
 }
-
-
-
-
