@@ -1,6 +1,6 @@
-package ru.aston.odod_mu.task1;
+package main.java.ru.aston.odod_mu.task1;
 
-abstract public class Car implements Comparable<Car>{
+abstract class Car implements Comparable<Car>{
 
     int price;
     String name;
