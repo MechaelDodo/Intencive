@@ -1,4 +1,4 @@
-package main.java.ru.aston.odod_mu.task1;
+package ru.aston.odod_mu.task1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
