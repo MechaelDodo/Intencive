@@ -1,105 +1,69 @@
-package main.java.ru.aston.odod_mu.task1;
+package ru.aston.odod_mu.task1;
+//package main.java.ru.aston.odod_mu.task1;
+import java.util.ArrayList;
+import java.util.List;
 
-//для себя попробовал enum
-
+/*
+P.S. немного измененное ТЗ
+пока делал задание думал о "Продаже" авто, в итоге после того как доделал, увидел в описании слово "Аренда".....
+ */
 public class Task1 {
     public static void main(String[] args){
 
-        Number[][] testValues = {
-                TestValues.TEST_INT.getValues(),
-                TestValues.TEST_DOUBLE.getValues(),
-                TestValues.TEST_LONG.getValues()
-        };
+        User user1 = new User(26, "Misha", "Odod");
+        User user2 = new User(21, "Dasha", "Kley");
+        User user3 = new User(30, "Andrey", "Popov");
 
-        for(Number[] values: testValues){
-            if (values[0] instanceof Integer && values[1] instanceof Integer){
-                System.out.println("Integer ADD: "+Calculator.add((int)values[0],(int)values[1]));
-                System.out.println("Integer SUB: "+Calculator.sub((int)values[0],(int)values[1]));
-                System.out.println("Integer DIV: "+Calculator.div((int)values[0],(int)values[1]));
-                System.out.println("Integer MULT: "+Calculator.mult((int)values[0],(int)values[1]));
-            }if (values[0] instanceof Double && values[1] instanceof Double){
-                System.out.println("Double ADD: "+Calculator.add((double)values[0],(double)values[1]));
-                System.out.println("Double SUB: "+Calculator.sub((double)values[0],(double)values[1]));
-                System.out.println("Double DIV: "+Calculator.div((double)values[0],(double)values[1]));
-                System.out.println("Double MULT: "+Calculator.mult((double)values[0],(double)values[1]));
-            }if (values[0] instanceof Long && values[1] instanceof Long){
-                System.out.println("Long ADD: "+Calculator.add((long)values[0],(long)values[1]));
-                System.out.println("Long SUB: "+Calculator.sub((long)values[0],(long)values[1]));
-                System.out.println("Long DIV: "+Calculator.div((long)values[0],(long)values[1]));
-                System.out.println("Long MULT: "+Calculator.mult((long)values[0],(long)values[1]));
-            }
+        Car truck1 = new Truck(20000, "Metal");
+        Car truck2 = new Truck(30000, "Gold");
+        Car truck3= new Truck(4000, "Bad Truck");
 
-        }
+        Car passenger1 = new Passenger(10000, "BMW");
+        Car passenger2 = new Passenger(12000, "Lada");
+        Car passenger3= new Passenger(40000, "Super car");
+
+        Order order1 = new Order(user1);
+        Order order2 = new Order(user2);
+        Order order3 = new Order(user3);
+
+        order1.setOrders(truck1);
+        order1.setOrders(passenger3);
+        order1.setOrders(passenger1);
+        order1.setOrders(passenger3);
+        order1.setOrders(truck2);
+        order1.setOrders(passenger3);
+        order1.setOrders(passenger3);
+
+        order1.printOrder();
+        System.out.println(order1.priceCalc());
+        System.out.println(order1.getDiscount());
+
+
+        order2.setOrders(truck2);
+        order2.setOrders(passenger3);
+        order2.setOrders(passenger1);
+        order2.setOrders(passenger1);
+        order2.setOrders(truck3);
+
+        order3.setOrders(truck1);
+        order3.setOrders(passenger2);
+        order3.setOrders(passenger1);
+        order3.setOrders(passenger3);
+        order3.setOrders(truck2);
+        order3.setOrders(truck1);
+        order3.setOrders(truck3);
+
+        List<Order> orders = new ArrayList<>();
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order3);
+
+        Order.printAllOrders(orders);
+
     }
 }
 
-class Calculator{
 
-    public static int add(int a, int b){
-        return a+b;
-    }
 
-    public static double add(double a, double b){
-        return a+b;
-    }
 
-    public static long add(long a, long b){
-        return a+b;
-    }
 
-    public static int sub(int a, int b){
-        return a-b;
-    }
-
-    public static double sub(double a, double b){
-        return a-b;
-    }
-
-    public static long sub(long a, long b){
-        return a-b;
-    }
-
-    public static int mult(int a, int b){
-        return a*b;
-    }
-
-    public static double mult(double a, double b){
-        return a*b;
-    }
-
-    public static long mult(long a, long b){
-        return a*b;
-    }
-
-    public static int div(int a, int b){
-        return a/b;
-    }
-
-    public static double div(double a, double b){
-        return a/b;
-    }
-
-    public static long div(long a, long b){
-        return a/b;
-    }
-
-}
-
-enum TestValues{
-    TEST_INT(5,3),
-    TEST_DOUBLE(5.2,3.6),
-    TEST_LONG(500000L,3000000L);
-
-    private final Number value1;
-    private final Number value2;
-
-    TestValues(Number value1, Number value2){
-        this.value1 = value1;
-        this.value2 = value2;
-    }
-
-    public Number[] getValues(){
-        return new Number[]{value1, value2};
-    }
-
-}
