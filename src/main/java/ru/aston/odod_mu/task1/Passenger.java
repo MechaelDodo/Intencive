@@ -1,6 +1,6 @@
-package main.java.ru.aston.odod_mu.task1;
+package ru.aston.odod_mu.task1;
 
-class Passenger extends Car{
+public class Passenger extends Car{
 
     public Passenger(int price, String name){
         this.price = price;
