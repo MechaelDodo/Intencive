@@ -15,8 +15,8 @@ public class OrderTest {
     private Order order = new Order(new User(18, "Den", "Denovich"));
 
     private enum Cars{
-        CAR_PASSENGER(new Passenger(1800, "Lada")),
-        CAR_TRUCK(new Truck(20000, "BELAZ"));
+        CAR_PASSENGER(new Passenger("1800", "Lada")),
+        CAR_TRUCK(new Truck("20000", "BELAZ"));
 
         private Car car;
         private Cars(Car car){

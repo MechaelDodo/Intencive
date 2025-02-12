@@ -1,93 +1,100 @@
 package ru.aston.odod_mu.task1;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class Order implements Discount{
-    private User user;
-    private List<Car> orders;
-    private static final double DISCOUNT_TRUCK = 0.8;
-    private static final double DISCOUNT_PASSENGER = 0.7;
-    private static Comparator<Order> userComparator = new Comparator<Order>() {
-        @Override
-        public int compare(Order o1, Order o2) {
-            return o1.user.getSourName().compareTo(o2.user.getSourName());
-        }
-    };
+public class Order implements Discount, OrderTruck, OrderPassenger{
+    private final User user;
+    private static final Comparator<Order> userComparator = Comparator.comparing(o -> o.user.getSourName());
+    private final List<Truck> order_truck;
+    private final List<Passenger> order_passenger;
 
     public Order(User user){
         this.user = user;
-        this.orders = new ArrayList<>();
+        this.order_truck = new ArrayList<>();
+        this.order_passenger = new ArrayList<>();
     }
 
     //Цена всех добавленных машин
     @Override
-    public int priceCalc(){
-        int price = 0;
-        for(Car order: this.orders){
-            price += order.getPrice();
-        }
-        return price;
+    public BigDecimal priceCalc(){
+        return priceCalcPassenger().add(priceCalcTruck());
     }
 
-    //Цена определенных машин (для метода getDiscount)
-    private int priceCalc(List<Car> cars){
-        int price = 0;
-        for(Car order: cars){
-            price += order.getPrice();
-        }
-        return price;
-    }
 
     //Добавление машины в заказ
     public void setOrders(Car car) {
-        this.orders.add(car);
-    }   //в идеале делать клон
+        if(car instanceof Passenger){
+            this.setCar((Passenger) car.clone());
+        }else if(car instanceof Truck){
+            this.setCar((Truck) car.clone());
+        }
+    }
 
     //Расчет скидки
     @Override
-    public int getDiscount(){
-        List<Car> trucks = new ArrayList<>();
-        List<Car> passengers = new ArrayList<>();
-        for(Car car: this.orders){
-            if (car instanceof Truck){
-                trucks.add(car);
-            }else if (car instanceof Passenger){
-                passengers.add(car);
-            }
-        }
-        int price_trucks = this.priceCalc(trucks);
-        int price_passengers = this.priceCalc(passengers);
-        if (trucks.size() >= 3){        //логика для расчета скидки грузовых автомобилей
-            price_trucks = (int) (price_trucks*DISCOUNT_TRUCK);
-        }
-        if (passengers.size() >= 5){    //логика для расчета скидки легковых автомобилей
-            price_passengers = (int) (price_passengers*DISCOUNT_PASSENGER);
-        }
-        return (price_trucks + price_passengers);
+    public BigDecimal getDiscount(){
+        return (getDiscountTruck().add(getDiscountPassenger()));
     }
 
     //Выводим отсортированную по прайсу корзину определенного юзера
     public void printOrder(){
         System.out.println("Order by");
         System.out.println(this.user);
-        this.orders.sort(null);
-        for(Car car: this.orders){
-            System.out.println(car);
-        }
-        System.out.println("------------");
+        List<Car> combinedOrder = Stream.concat(this.order_passenger.stream(), this.order_truck.stream())
+                .sorted()
+                .collect(Collectors.toList());
+        combinedOrder.forEach(System.out::println);
+        System.out.println("\n");
     }
 
     //Выводим отсортированную корзину по фамилии пользователей
-    public static void printAllOrders(List<Order> orders){
-        orders.sort(Order.userComparator);
-        for(Order order: orders){
-            order.printOrder();
+    public static void printAllOrders(List<Order> orders) {
+        orders.stream()  // Создаем поток из списка заказов
+                .sorted(Order.userComparator)  // Сортируем по компаратору пользователей
+                .forEach(order -> order.printOrder());  // Для каждого заказа вызываем метод printOrder()
+    }
+
+    //Добавление машины в заказ
+    public void setCar(Truck car){
+        order_truck.add(car);
+    }
+
+    public void setCar(Passenger car){
+        order_passenger.add(car);
+    }
+
+    public BigDecimal priceCalcTruck() {
+        return this.order_truck.stream()  // Создаем поток из списка order_truck
+                .map(Truck::getPrice)  // Преобразуем каждый объект Truck в его цену
+                .reduce(BigDecimal.ZERO, BigDecimal::add);  // Суммируем все цены
+    }
+
+    public BigDecimal priceCalcPassenger(){
+        return this.order_passenger.stream()  // Создаем поток из списка order_truck
+                .map(Passenger::getPrice)  // Преобразуем каждый объект Truck в его цену
+                .reduce(BigDecimal.ZERO, BigDecimal::add);  // Суммируем все цены
+    }
+
+    public BigDecimal getDiscountTruck(){
+        if (order_truck.size() >= 3){        //логика для расчета скидки грузовых автомобилей
+            return this.priceCalcTruck().multiply(DISCOUNT_PERCENT.DISCOUNT_TRUCK.get_percent());
+        }else{
+            return this.priceCalcTruck();
         }
     }
 
-
+    public BigDecimal getDiscountPassenger(){
+        if (order_passenger.size() >= 5){        //логика для расчета скидки грузовых автомобилей
+            return this.priceCalcPassenger().multiply(DISCOUNT_PERCENT.DISCOUNT_PASSENGER.get_percent());
+        }else{
+            return this.priceCalcPassenger();
+        }
+    }
 
 }

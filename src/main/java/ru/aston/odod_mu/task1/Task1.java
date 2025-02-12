@@ -14,13 +14,13 @@ public class Task1 {
         User user2 = new User(21, "Dasha", "Kley");
         User user3 = new User(30, "Andrey", "Popov");
 
-        Car truck1 = new Truck(20000, "Metal");
-        Car truck2 = new Truck(30000, "Gold");
-        Car truck3= new Truck(4000, "Bad Truck");
+        Car truck1 = new Truck("20000.123123", "Metal");
+        Car truck2 = new Truck("30000.53223", "Gold");
+        Car truck3= new Truck("4000.8593454", "Bad Truck");
 
-        Car passenger1 = new Passenger(10000, "BMW");
-        Car passenger2 = new Passenger(12000, "Lada");
-        Car passenger3= new Passenger(40000, "Super car");
+        Car passenger1 = new Passenger("10000.532564", "BMW");
+        Car passenger2 = new Passenger("12000.00000001", "Lada");
+        Car passenger3= new Passenger("40000.039898", "Super car");
 
         Order order1 = new Order(user1);
         Order order2 = new Order(user2);

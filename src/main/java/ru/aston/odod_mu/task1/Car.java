@@ -1,14 +1,17 @@
 package ru.aston.odod_mu.task1;
 
-abstract public class Car implements Comparable<Car>{
+import java.math.BigDecimal;
 
-    int price;
+abstract public class Car implements Comparable<Car>, Cloneable{
+
+    BigDecimal price;
     String name;
 
-    protected int getPrice(){
+
+    protected BigDecimal getPrice(){
         return this.price;
     }
-    /*
+
     @Override
     protected Car clone(){
         try {
@@ -18,11 +21,11 @@ abstract public class Car implements Comparable<Car>{
             return null;
         }
     }
-     */
+
     abstract void getInfo();
 
     @Override
     public int compareTo(Car car){
-        return Integer.compare(this.price, car.price);
+        return Double.compare(this.price.doubleValue(), car.price.doubleValue());
     }
 }
